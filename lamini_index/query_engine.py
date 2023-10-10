@@ -18,7 +18,7 @@ class QueryEngine:
         return self.model(prompt)
 
     def _build_prompt(self, question):
-        most_similar = self.index.query(question)
+        most_similar = self.index.query(question, k=5)
 
         prompt = "\n".join(reversed(most_similar)) + "\n\n" + question
 
