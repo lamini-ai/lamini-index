@@ -23,7 +23,7 @@ loader = DirectoryLoader("data")
 index = LaminiIndex(loader)
 engine = QueryEngine(index)
 
-answer = engine.answer_question("Who won the case above?")
+answer = engine.answer_question("Who won the case above about dana and wells fargo?")
 
 ```
 
