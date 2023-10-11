@@ -19,8 +19,8 @@ def main():
     print('Building index for corpus: %s' % args.corpus)
     print('Index will be saved to: %s' % args.index)
 
-    loader = DirectoryLoader(args.corpus)
-    index = LaminiIndex(loader)
+    documents = DirectoryLoader(args.corpus)
+    index = LaminiIndex(documents)
     index.save_index(args.index)
 
 main()
