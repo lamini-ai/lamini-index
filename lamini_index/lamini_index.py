@@ -8,14 +8,11 @@ import json
 import os
 import numpy as np
 
-import logging
-
-logger = logging.getLogger(__name__)
-
 class LaminiIndex:
-    def __init__(self, loader=None):
+    def __init__(self, loader=None, verbose=True):
         self.batch_size = 512
         self.loader = loader
+        self.verbose = verbose
 
         if loader is not None:
             self.build_index()
@@ -42,12 +39,13 @@ class LaminiIndex:
         self.index = None
 
         # load a batch of splits from a generator
+        if self.verbose: print("Generating data splits and building index..")
         for split_batch in tqdm(self.loader.get_split_batches(self.batch_size)):
             embeddings = self.get_embeddings(split_batch)
 
             if self.index is None:
                 # initialize the index
-                logger.info(f"Creating index with dimension {len(embeddings[0])}")
+                print(f"Creating index with dimension {len(embeddings[0])}")
                 self.index = faiss.IndexFlatL2(len(embeddings[0]))
 
             # add the embeddings to the index
@@ -55,6 +53,7 @@ class LaminiIndex:
 
             # save the splits
             self.splits.extend(split_batch)
+        if self.verbose: print("Done generating data splits and building index!")
 
     def get_embeddings(self, examples):
         embeddings = query_run_embedding(examples)
