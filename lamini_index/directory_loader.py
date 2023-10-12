@@ -1,10 +1,6 @@
 
 import os
 
-import logging
-
-logger = logging.getLogger(__name__)
-
 class DefaultChunker:
     def __init__(self, split_size=512, step_size=128):
         self.split_size = split_size

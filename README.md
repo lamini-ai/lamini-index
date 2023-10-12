@@ -27,9 +27,15 @@ answer = engine.answer_question("Who won the case above about dana and wells far
 
 ```
 
+Rag-Model Response:
 ```
 The court ruled in favor of Dana and Linda Phillabaum, the defendants and appellees,
 in the foreclosure action brought against them by Wells Fargo.
+```
+
+This code is also preset in `rag.py`. You can run it using 
+```bash
+python rag.py
 ```
 
 # Use the command line tools
