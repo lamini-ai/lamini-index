@@ -1,10 +1,6 @@
 
 from lamini import LlamaV2Runner
 
-import logging
-
-logger = logging.getLogger(__name__)
-
 class QueryEngine:
     def __init__(self, index, verbose=True):
         self.index = index
