@@ -14,7 +14,6 @@ logger = logging.getLogger(__name__)
 
 class LaminiIndex:
     def __init__(self, loader=None):
-        self.batch_size = 512
         self.loader = loader
 
         if loader is not None:
@@ -42,7 +41,7 @@ class LaminiIndex:
         self.index = None
 
         # load a batch of splits from a generator
-        for split_batch in tqdm(self.loader.get_split_batches(self.batch_size)):
+        for split_batch in tqdm(self.loader):
             embeddings = self.get_embeddings(split_batch)
 
             if self.index is None:
@@ -63,7 +62,7 @@ class LaminiIndex:
 
         return np.array(embedding_list)
 
-    def query(self, query, k=10):
+    def query(self, query, k=5):
         embedding = self.get_embeddings([query])[0]
 
         embedding_array = np.array([embedding])
@@ -78,10 +77,10 @@ class LaminiIndex:
         faiss_path = os.path.join(path, "index.faiss")
         splits_path = os.path.join(path, "splits.json")
 
-        logger.info("Saving index to %s", faiss_path)
-        logger.info("Saving splits to %s", splits_path)
+        logger.debug("Saving index to %s", faiss_path)
+        logger.debug("Saving splits to %s", splits_path)
 
-        logger.info("Index size: %d", self.index.ntotal)
+        logger.debug("Index size: %d", self.index.ntotal)
 
         # Save the index to a file
         faiss.write_index(self.index, faiss_path)
